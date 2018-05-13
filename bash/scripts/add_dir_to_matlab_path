@@ -1,0 +1,5 @@
+#!/bin/bash
+# This script adds indicator file to tht current directory for automatic matlab search path generation
+
+TEXT=$'!!!!!----- DO NOT DELETE THIS FILE -----!!!!!\n\nThis file is needed for automatic detection of this directory and adding it to the search path when MATLAB is launched.'
+echo "$TEXT" > .ADD_TO_MATLAB_PATH

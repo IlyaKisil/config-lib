@@ -1,0 +1,33 @@
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# Update PATH and PS
+if [ -f "$HOME/.bash_profile" ]; then
+    . "$HOME/.bash_profile"
+fi
+
+HISTCONTROL=ignoreboth  # don't put duplicate lines or lines
+shopt -s histappend     # append to the history file, don't overwrite it
+HISTSIZE=1000           # set history size
+HISTFILESIZE=2000       # set history size
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+
+# alias definitions.
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# Enable git completion
+if [ -f '/usr/share/bash-completion/completions/git' ]; then
+    source '/usr/share/bash-completion/completions/git';
+fi
+
+
+echo "bashrc has been executed"

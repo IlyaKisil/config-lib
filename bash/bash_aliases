@@ -1,0 +1,40 @@
+############### GENERAL ###############
+# reload bash
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    alias bp='source ~/.bashrc'
+    alias ls='ls --color=auto -la'
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    alias bp='source ~/.bash_profile'
+    alias ls='ls -la'
+    alias show='defaults write com.apple.finder AppleShowAllFiles YES;killall Finder /System/Library/CoreServices/Finder.app'
+    alias hide='defaults write com.apple.finder AppleShowAllFiles NO;killall Finder /System/Library/CoreServices/Finder.app'
+fi
+alias ..='cd ..'
+alias clc='clear'
+alias add='git add --all;git status'
+alias grep='grep --color=auto'
+
+
+############### PYTHON ###############
+alias sa='source activate'
+alias sd='source deactivate'
+alias jn='jupyter notebook'
+alias jl='jupyter-lab'
+
+
+############### REMOTE CONTROL ###############
+# ssh to my EEE machine
+alias eee='ssh eee_ubuntu'
+
+
+############### MOUNT DEVICES ###############
+MOUNT_POINT=~/Mount
+alias ik='sshfs ik1614@155.198.125.35:/home/ik1614/ $MOUNT_POINT/1-EEE-ik1614'
+alias uik='umount $MOUNT_POINT/1-EEE-ik1614'
+
+
+############### MATLAB ###############
+alias mat='matlab -nodisplay -nosplash'
+
+
+echo "bash_aliases has been loaded"

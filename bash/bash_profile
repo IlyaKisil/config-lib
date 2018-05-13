@@ -1,0 +1,35 @@
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [ -f ~/.bashrc ]; then
+      . ~/.bashrc
+  fi
+fi
+
+# enable colors for ls. directories - magneta everything else is default
+export CLICOLOR=1
+export LSCOLORS=fxxxxxxxxxxxxxxxxxxxxx
+export TERM=xterm-256color
+
+# Defining home directories
+BASH_SCRIPTS_HOME=~/.bash_scripts
+
+# Add directories to the $PATH
+export PATH=$MY_BASH_SCRIPTS_HOME:$PATH
+
+# Customizing the promt line
+RED='\[\033[0;31m\]'
+REDBLINK='\[\033[5;31m\]'
+GREEN='\[\033[0;32m\]'
+CYAN='\[\033[0;36m\]'
+BROWN='\[\033[0;33m\]'
+NC='\[\033[0;0m\]'
+
+HOST='@\h '
+TIME='\A '
+LOCATION='`pwd | sed "s#.*\(/[^/]\{1,\}/[^/]\{1,\}/[^/]\{1,\}/\)/\{0,1\}#\1#g"` '
+BRANCH='$(gitBranch)'
+NEWLINE='\n\$ '
+
+export PS1=$RED$TIME$GREEN$USER$HOST$CYAN$LOCATION$BROWN$BRANCH$NC$NEWLINE
+
+
+echo "bash_profile has been loaded"

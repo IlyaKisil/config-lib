@@ -1,0 +1,11 @@
+HOST eee_ubuntu
+    HostName 155.198.125.35
+    User ik1614
+    IdentityFile ~/.ssh/eee_ubuntu_ik1614
+Host gitlab.doc.ic.ac.uk
+    RSAAuthentication yes
+    IdentityFile ~/.ssh/gitlab_ik1614
+HOST IlyaKisil.github.com
+    HostName github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/github_IlyaKisil
