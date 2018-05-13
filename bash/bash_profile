@@ -10,10 +10,10 @@ export LSCOLORS=fxxxxxxxxxxxxxxxxxxxxx
 export TERM=xterm-256color
 
 # Defining home directories
-BASH_SCRIPTS_HOME=~/.bash_scripts
+BASH_SCRIPTS_HOME=~/scripts
 
 # Add directories to the $PATH
-export PATH=$MY_BASH_SCRIPTS_HOME:$PATH
+export PATH=$BASH_SCRIPTS_HOME:$PATH
 
 # Customizing the promt line
 RED='\[\033[0;31m\]'
