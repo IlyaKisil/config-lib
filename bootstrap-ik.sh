@@ -153,10 +153,10 @@ check_default_shell(){
             echo "Changing default shell to zsh. Enter password: "
 
             if [[ $OS == 'Linux' ]]; then
-                chsh -s ${ZSH_BIN_PATH}
+                sudo chsh -s ${ZSH_BIN_PATH}
             elif [[ $OS == 'Darwin' ]]; then
                 echo "${ZSH_BIN_PATH}" | sudo tee -a /etc/shells > /dev/null
-                chsh -s ${ZSH_BIN_PATH}
+                sudo chsh -s ${ZSH_BIN_PATH}
             fi
         fi
 	fi

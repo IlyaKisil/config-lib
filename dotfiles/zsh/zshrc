@@ -52,7 +52,7 @@ ZSH_THEME="agnoster"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=$HOME/.zshrc-local
+# ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -62,10 +62,11 @@ plugins=(
   git
 )
 
+source $HOME/.zshrc-local
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-source $ZSH_CUSTOM
+# source $ZSH_CUSTOM
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
