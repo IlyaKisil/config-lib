@@ -27,24 +27,30 @@ show_outline(){
     echo ""
 
     echo "Preparation stage: "
-    printf "\t1. Make sure you have zsh and tmux installed. \n"
-    printf "\t2. Install them if you don't. \n"
-    printf "\t3. Make sure that zsh is your default shell. \n"
-    printf "\t4. Change it if it's not. \n\n"
+    printf "\t 1. Make sure you have zsh and tmux installed. \n"
+    printf "\t 2. Install them if you don't. \n"
+    printf "\t 3. Make sure that zsh is your default shell. \n"
+    printf "\t 4. Change it if it's not. \n\n"
 
     printf "Configuration stage: \n"
-    printf "\t1. Backup existing configuration in: \n"
+    printf "\t 1. Backup existing configuration (except symlinks) in: \n"
     printf "\t\t${GREEN}${BACKUP_DIR}${WHITE} \n"
-    printf "\t2. Clean existing configuration if exists. \n"
+    printf "\t 2. Clean existing configuration if exists. \n"
     for name in "${CONFIG_FILES[@]}"
     do
         printf "\t\t${RED}$HOME/$name$WHITE\n"
     done
-    printf "\t3. Create new configuration for: \n"
+    printf "\t 3. Create new configuration for: \n"
     for name in "${CONFIG_FILES[@]}"
     do
         printf "\t\t$GREEN$HOME/$name$WHITE\n"
     done
+    printf "\t 4. Create SSH keys if both private and public parts are missing: \n"
+    for key_name in "${SSH_KEYS[@]}"
+    do
+        printf "\t\t$GREEN$HOME/.ssh/$key_name$WHITE\n"
+    done
+    printf "\t 5. Change HTTPS to URL so to use appropriate SSH key. \n"
 
 }
 
@@ -67,9 +73,17 @@ declare -a CONFIG_FILES=(".gitconfig"
                          ".gitignore-global"
                          ".zshrc"
                          ".zshrc-local"
-                         ".ssh/config"
                          ".tmux.conf"
+                         ".ssh/config"
                          )
+declare -a SSH_KEYS=("github_IlyaKisil"
+                     "github_AnnaKisil"
+                     "gitlab_ik1614"
+                     "eee_ubuntu_ik1614"
+                     "eee_mac_mini_ilia"
+                     "owncloud_server"
+                     "ik1614_doc"
+                     )
 
 BACKUP_DIR="$HOME/.config_${DATE}_${TIME}"
 
@@ -198,15 +212,7 @@ ssh_bootstrap(){
     fi
     $COPY $DFH/dotfiles/ssh/config $HOME/.ssh/config
 
-    # create ssh keys
-    declare -a SSH_KEYS=("github_IlyaKisil"
-                         "github_AnnaKisil"
-                         "gitlab_ik1614"
-                         "eee_ubuntu_ik1614"
-                         "eee_mac_mini_ilia"
-                         "owncloud_server"
-                         "ik1614_doc"
-                         )
+    # create ssh keys only if both parts are missing
     for name in "${SSH_KEYS[@]}"
     do
         ssh_key="$HOME/.ssh/$name"
@@ -241,7 +247,7 @@ zsh_bootstrap(){
 
     # ------------- Install zsh, make it default shell
     if [[ -d ~/.oh-my-zsh/ ]]; then
-        echo "Oh-My-Zsh exists. Consider to do git pull"
+        echo -e "Oh-My-Zsh exists. Consider to do ${GREEN}git pull${WHITE}."
     else
         # Clone oh-my-zsh and change URLs from HTTPS to SSH
         git clone https://github.com/IlyaKisil/oh-my-zsh.git ~/.oh-my-zsh/
@@ -275,8 +281,6 @@ change_https_to_url(){
 }
 
 
-
-
 ##########################################
 ###--------        Main        --------###
 ##########################################
@@ -292,12 +296,16 @@ else
 fi
 
 check_software zsh
+
 check_software tmux
+
 check_default_shell
+
 backup_config
+
 clean_config
 
-printf "\nWould you like to symbolic links (for all files)? (y/n) "
+printf "\nWould you like to bootstrap as symlinks as opposed to copying? (y/n) "
 answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
 if echo "$answer" | grep -iq "^y" ;then
     printf "Configuration files will be ${GREEN}symbolic links$WHITE.\n\n"
