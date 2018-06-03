@@ -1,0 +1,3 @@
+Over here need to check for py36 conda venv and the corresponding kernel.
+
+If it does not exist then create it with requirements and new kernel

@@ -7,7 +7,7 @@
 [push]
 	default = simple
 [core]
-	excludesfile = ~/.config/git/gitignore
+	excludesfile = ~/.gitignore-global
 	editor = /usr/bin/nano
 [color "status"]
     added = yellow

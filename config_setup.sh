@@ -1,4 +1,6 @@
 #! /bin/bash
+##------------------ DO NOT USE THIS SCRIPT
+exit
 clear
 
 #---------- Delete existing configutiona files
@@ -22,13 +24,13 @@ fi
 
 #---------- Copy conf files or create symlinks
 CPY='cp -r'  # use CPY='ln -sf' for symlinks
-$CPY $PWD/bash/bashrc $HOME/.bashrc
-$CPY $PWD/bash/bash_profile $HOME/.bash_profile
-$CPY $PWD/bash/bash_aliases $HOME/.bash_aliases
-$CPY $PWD/bash/scripts $HOME
-$CPY $PWD/git/gitconfig $HOME/.gitconfig
-$CPY $PWD/git/gitignore $HOME/.config/git/gitignore
-$CPY $PWD/ssh/config $HOME/.ssh/config
+$CPY $PWD/dotfiles/bash/bashrc $HOME/.bashrc
+$CPY $PWD/dotfiles/bash/bash_profile $HOME/.bash_profile
+$CPY $PWD/dotfiles/bash/bash_aliases $HOME/.bash_aliases
+$CPY $PWD/dotfiles/bash/scripts $HOME
+$CPY $PWD/dotfiles/git/gitconfig $HOME/.gitconfig
+$CPY $PWD/dotfiles/git/gitignore-global $HOME/.gitignore-global
+$CPY $PWD/dotfiles/ssh/config $HOME/.ssh/config
 
 
 source ~/.bashrc
