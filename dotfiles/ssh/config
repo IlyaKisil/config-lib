@@ -1,7 +1,3 @@
-HOST eee_ubuntu
-    HostName 155.198.125.35
-    User ik1614
-    IdentityFile ~/.ssh/eee_ubuntu_ik1614
 Host gitlab.doc.ic.ac.uk
     RSAAuthentication yes
     IdentityFile ~/.ssh/gitlab_ik1614
@@ -9,3 +5,28 @@ HOST IlyaKisil.github.com
     HostName github.com
     PreferredAuthentications publickey
     IdentityFile ~/.ssh/github_IlyaKisil
+HOST github.com
+    HostName github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/github_IlyaKisil
+HOST AnnaKisil.github.com
+    HostName github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/github_AnnaKisil
+
+HOST eee_ubuntu
+    HostName 155.198.125.35
+    User ik1614
+    IdentityFile ~/.ssh/eee_ubuntu_ik1614
+HOST eee_mac_mini
+    HostName dyn125-229.ee.ic.ac.uk
+    User ilia_eee_mac
+    IdentityFile ~/.ssh/eee_mac_mini_ilia
+HOST shell1 shell2 shell3 shell4 batch1
+    HostName %h.doc.ic.ac.uk
+    User ik1614
+    IdentityFile ~/.ssh/ik1614_doc
+HOST owncloud_server
+    HostName 155.198.125.147
+    User sel
+    IdentityFile ~/.ssh/owncloud_server
