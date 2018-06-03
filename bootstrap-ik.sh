@@ -128,7 +128,7 @@ install_software(){
 
 check_default_shell(){
     if [ -z "${SHELL##*zsh*}" ] ;then
-        echo -e "Default shell is ${GREEN}already zsh${WHITE}."
+        printf "Default shell is ${GREEN}already zsh${WHITE}."
 	else
         ZSH_BIN_PATH=`which zsh`
         CURRENT_SHELL=`which $SHELL`
@@ -229,6 +229,7 @@ git_bootstrap(){
 
 tmux_bootstrap(){
     printf "\nBootstrap of ${GREEN}TMUX${WHITE} config files.\n"
+
     $COPY $DFH/dotfiles/tmux/tmux.conf $HOME/.tmux.conf
 }
 
@@ -314,5 +315,6 @@ tmux_bootstrap
 
 change_https_to_url
 
-
-printf "\n\n${GREEN}Configuration completed.${WHITE}\n"
+printf     "\n\n========================================\n"
+printf "${GREEN}=== Configuration completed.${WHITE} ===\n"
+printf     "\n\n========================================\n\n"
