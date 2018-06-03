@@ -97,8 +97,8 @@ check_software(){
         echo -e "${RED}not installed${WHITE}."
 		install_software $1
 	else
-        soft_version=`$1 --version`
-		echo -e "${GREEN}${soft_version}${WHITE}."
+        soft_bin=`command -v $1`
+		echo -e "${GREEN}${soft_bin}${WHITE}."
 	fi
 }
 
@@ -108,15 +108,13 @@ install_software(){
     if echo "$answer" | grep -iq "^y" ;then
         if [[ $OS == 'Linux' ]]; then
             if [ -x "$(command -v apt-get)" ]; then
-                echo "Intalling using apt-get"
-                sudo apt-get install $1 -y
+                apt-get install $1 -y
             else
                 echo -e "${RED}Warning:${WHITE} Not sure what your package manager is. Abort installation."
                 echo -e "${RED}Warning:${WHITE} Your configuration won't work as expected."
             fi
 		elif [[ $OS == 'Darwin' ]]; then
             if [ -x "$(command -v brew)" ]; then
-                echo "Intalling using brew"
                 brew install $1
             else
                 echo -e "${RED}Warning:${WHITE} Not sure what your package manager is. Abort installation."
@@ -130,7 +128,7 @@ install_software(){
 
 check_default_shell(){
     if [ -z "${SHELL##*zsh*}" ] ;then
-        echo "Default shell is ${GREEN}already zsh${WHITE}."
+        echo -e "Default shell is ${GREEN}already zsh${WHITE}."
 	else
         ZSH_BIN_PATH=`which zsh`
         CURRENT_SHELL=`which $SHELL`
@@ -139,9 +137,7 @@ check_default_shell(){
             printf "\n${RED}WARNING:${WHITE} You still don't have zsh. Your configuration won't work as expected."
         else
             echo "Changing default shell to zsh. Enter password: "
-            # return
 
-            ################
             if [[ $OS == 'Linux' ]]; then
                 chsh -s ${ZSH_BIN_PATH}
             elif [[ $OS == 'Darwin' ]]; then
@@ -153,11 +149,8 @@ check_default_shell(){
 }
 
 backup_config(){
-    printf "\nBackup of existing configuration: "
-    printf "${GREEN}Completed${WHITE}\n"
-    # return
+    printf "\nBacking up an existing configuration.\n"
 
-    ###################
     README="$BACKUP_DIR/README.md"
     mkdir $BACKUP_DIR
     printf "Backup of configuration existed on $DATE at $TIME:\n\n" > $README
@@ -180,9 +173,7 @@ backup_config(){
 }
 
 clean_config(){
-    printf "\nCleaning of existing configuration: "
-    printf "${GREEN}Completed${WHITE}\n"
-    # return
+    printf "\nCleaning up an existing configuration.\n"
 
     for name in "${CONFIG_FILES[@]}"
     do
@@ -201,9 +192,7 @@ clean_config(){
 ssh_bootstrap(){
     printf "Bootstrap of ${GREEN}SSH${WHITE} config files: "
     printf "${GREEN}Completed${WHITE}\n"
-    # return
 
-    ###############
     # setup ssh config
     SSH_CONFIG_HOME="$HOME/.ssh"
     if [[ ! -d $SSH_CONFIG_HOME ]]; then
@@ -233,31 +222,19 @@ ssh_bootstrap(){
 }
 
 git_bootstrap(){
-    printf "Bootstrap of ${GREEN}GIT${WHITE} config files: "
-    printf "${GREEN}Completed${WHITE}\n"
-    # return
+    printf "Bootstrap of ${GREEN}GIT${WHITE} config files.\n"
 
-    ############
     $COPY $DFH/dotfiles/git/gitconfig-global $HOME/.gitconfig-global
     $COPY $DFH/dotfiles/git/gitconfig $HOME/.gitconfig
 }
 
 tmux_bootstrap(){
-    printf "Bootstrap of ${GREEN}TMUX${WHITE} config files: "
-    printf "${GREEN}Completed${WHITE}\n"
-    # return
-
-    #############
+    printf "Bootstrap of ${GREEN}TMUX${WHITE} config files.\n"
     $COPY $DFH/dotfiles/tmux/tmux.conf $HOME/.tmux.conf
 }
 
 zsh_bootstrap(){
-    printf "Bootstrap of ${GREEN}ZSH${WHITE} config files: "
-    printf "${GREEN}Completed${WHITE}\n"
-    # return
-
-    ####################
-
+    printf "Bootstrap of ${GREEN}ZSH${WHITE} config files.\n"
 
     $COPY $DFH/dotfiles/zsh/zshrc $HOME/.zshrc
     printf "\n\n\n# Specific configurations for the local machine\n\n" >> $HOME/.zshrc-local
@@ -279,26 +256,22 @@ zsh_bootstrap(){
 }
 
 change_https_to_url(){
-    echo "hello"
-    # return
-
 
     # Change URLs from HTTPS to SSH in order to use an appropriate ssh key
     cd $DFH
     printf "\nChanging HTTPS to URL for origin of ${GREEN}config-lib.git${WHITE}\n"
     echo $PWD
     git remote -v
-    # git remote set-url origin git@IlyaKisil.github.com:IlyaKisil/config-lib.git
-    #
-    cd ~/GitLab/globalsip_2018
+    git remote set-url origin git@IlyaKisil.github.com:IlyaKisil/config-lib.git
+    git remote -v
 
+    cd ~/.oh-my-zsh
     printf "\nChanging HTTPS to URL for origin of ${GREEN}oh-my-zsh.git${WHITE}\n"
     echo $PWD
     git remote -v
-    # git remote set-url origin git@IlyaKisil.github.com:IlyaKisil/oh-my-zsh.git
-    # cd ~/
+    git remote set-url origin git@IlyaKisil.github.com:IlyaKisil/oh-my-zsh.git
+    git remote -v
     cd $DFH
-    # echo $PWD
 }
 
 
