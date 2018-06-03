@@ -71,7 +71,7 @@ declare -a CONFIG_FILES=(".gitconfig"
                          ".tmux.conf"
                          )
 
-BACKUP_DIR="$HOME/config_${DATE}_${TIME}"
+BACKUP_DIR="$HOME/.config_${DATE}_${TIME}"
 
 AUTO=0
 
@@ -128,7 +128,7 @@ install_software(){
 
 check_default_shell(){
     if [ -z "${SHELL##*zsh*}" ] ;then
-        printf "Default shell is ${GREEN}already zsh${WHITE}."
+        printf "Default shell is ${GREEN}already zsh${WHITE}.\n"
 	else
         ZSH_BIN_PATH=`which zsh`
         CURRENT_SHELL=`which $SHELL`
@@ -158,8 +158,7 @@ backup_config(){
     do
         config_file="$HOME/$name"
         if [[ -L $config_file ]]; then
-            printf "$config_file is a symlink. Copying contents of the original file \n" >> $README
-            cat $config_file > "$BACKUP_DIR/$name"
+            printf "$config_file is a symlink. No need to backup \n" >> $README
         elif [[ -f $config_file ]]; then
             cp -r $config_file $BACKUP_DIR
             printf "Copying $config_file \n" >> $README
@@ -315,6 +314,6 @@ tmux_bootstrap
 
 change_https_to_url
 
-printf     "\n\n========================================\n"
-printf "${GREEN}=== Configuration completed.${WHITE} ===\n"
-printf     "\n\n========================================\n\n"
+printf "\n\n================================\n"
+printf "=== ${GREEN}Configuration completed.${WHITE} ===\n"
+printf "================================\n\n"
