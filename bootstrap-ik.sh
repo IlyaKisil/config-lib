@@ -108,7 +108,7 @@ install_software(){
     if echo "$answer" | grep -iq "^y" ;then
         if [[ $OS == 'Linux' ]]; then
             if [ -x "$(command -v apt-get)" ]; then
-                apt-get install $1 -y
+                sudo apt-get install $1 -y
             else
                 echo -e "${RED}Warning:${WHITE} Not sure what your package manager is. Abort installation."
                 echo -e "${RED}Warning:${WHITE} Your configuration won't work as expected."
@@ -198,7 +198,7 @@ ssh_bootstrap(){
     if [[ ! -d $SSH_CONFIG_HOME ]]; then
         mkdir  $SSH_CONFIG_HOME
     fi
-    $COPY $DHF/dotfiles/ssh/config $HOME/.ssh/config
+    $COPY $DFH/dotfiles/ssh/config $HOME/.ssh/config
 
     # create ssh keys
     declare -a SSH_KEYS=("github_IlyaKisil"
@@ -224,8 +224,8 @@ ssh_bootstrap(){
 git_bootstrap(){
     printf "Bootstrap of ${GREEN}GIT${WHITE} config files.\n"
 
-    $COPY $DFH/dotfiles/git/gitconfig-global $HOME/.gitconfig-global
     $COPY $DFH/dotfiles/git/gitconfig $HOME/.gitconfig
+    $COPY $DFH/dotfiles/git/gitignore-global $HOME/.gitignore-global
 }
 
 tmux_bootstrap(){
@@ -237,7 +237,8 @@ zsh_bootstrap(){
     printf "Bootstrap of ${GREEN}ZSH${WHITE} config files.\n"
 
     $COPY $DFH/dotfiles/zsh/zshrc $HOME/.zshrc
-    printf "\n\n\n# Specific configurations for the local machine\n\n" >> $HOME/.zshrc-local
+    printf "# Specific configurations for the local machine\n\n" >> $HOME/.zshrc-local
+    printf "export LANG=en_US.UTF-8\n" >> $HOME/.zshrc-local
 
     # ------------- Install zsh, make it default shell
     if [[ -d ~/.oh-my-zsh/ ]]; then
