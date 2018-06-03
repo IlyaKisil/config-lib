@@ -157,15 +157,15 @@ backup_config(){
     for name in "${CONFIG_FILES[@]}"
     do
         config_file="$HOME/$name"
-        if [[ -f $config_file ]]; then
+        if [[ -L $config_file ]]; then
+            printf "$config_file is a symlink. Copying contents of the original file \n" >> $README
+            cat $config_file > "$BACKUP_DIR/$name"
+        elif [[ -f $config_file ]]; then
             cp -r $config_file $BACKUP_DIR
             printf "Copying $config_file \n" >> $README
         elif [[ -d $config_file ]]; then
             cp -r $config_file $BACKUP_DIR
             printf "Copying $config_file \n" >> $README
-        elif [[ -L $config_file ]]; then
-            printf "$config_file is a symlink. Copying original file \n" >> $README
-            cat $config_file > "$BACKUP_DIR/$name"
         else
             printf "Config file $config_file does not exist \n" >> $README
         fi
@@ -190,8 +190,7 @@ clean_config(){
 }
 
 ssh_bootstrap(){
-    printf "Bootstrap of ${GREEN}SSH${WHITE} config files: "
-    printf "${GREEN}Completed${WHITE}\n"
+    printf "\nBootstrap of ${GREEN}SSH${WHITE} config files.\n"
 
     # setup ssh config
     SSH_CONFIG_HOME="$HOME/.ssh"
@@ -214,7 +213,7 @@ ssh_bootstrap(){
         ssh_key="$HOME/.ssh/$name"
         if [ ! -f $ssh_key ] && [ ! -f "${ssh_key}.pub" ]   ; then
             printf "\tSSH key ${GREEN}$ssh_key${WHITE} is missing. Creating one.\n"
-            # ssh-keygen -t rsa -b 4096 -C "ilyakisil@gmail.com" <<< $ssh_key
+            ssh-keygen -t rsa -b 4096 -C "ilyakisil@gmail.com" <<< $ssh_key
         else
             printf "\tSSH key ${RED}${ssh_key}${WHITE} exists. Creation is skipped.\n"
         fi
@@ -222,19 +221,19 @@ ssh_bootstrap(){
 }
 
 git_bootstrap(){
-    printf "Bootstrap of ${GREEN}GIT${WHITE} config files.\n"
+    printf "\nBootstrap of ${GREEN}GIT${WHITE} config files.\n"
 
     $COPY $DFH/dotfiles/git/gitconfig $HOME/.gitconfig
     $COPY $DFH/dotfiles/git/gitignore-global $HOME/.gitignore-global
 }
 
 tmux_bootstrap(){
-    printf "Bootstrap of ${GREEN}TMUX${WHITE} config files.\n"
+    printf "\nBootstrap of ${GREEN}TMUX${WHITE} config files.\n"
     $COPY $DFH/dotfiles/tmux/tmux.conf $HOME/.tmux.conf
 }
 
 zsh_bootstrap(){
-    printf "Bootstrap of ${GREEN}ZSH${WHITE} config files.\n"
+    printf "\nBootstrap of ${GREEN}ZSH${WHITE} config files.\n"
 
     $COPY $DFH/dotfiles/zsh/zshrc $HOME/.zshrc
     printf "# Specific configurations for the local machine\n\n" >> $HOME/.zshrc-local
@@ -242,7 +241,7 @@ zsh_bootstrap(){
 
     # ------------- Install zsh, make it default shell
     if [[ -d ~/.oh-my-zsh/ ]]; then
-        echo "Oh-My -Zsh exists"
+        echo "Oh-My-Zsh exists. Consider to do git pull"
     else
         # Clone oh-my-zsh and change URLs from HTTPS to SSH
         git clone https://github.com/IlyaKisil/oh-my-zsh.git ~/.oh-my-zsh/
