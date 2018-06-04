@@ -8,7 +8,7 @@ usage: $0 [-h?] [-c]
 
 BASIC OPTIONS:
    -h         Show this message
-   -a         Automated setup (No backup, symlink etc)
+   -a         WIP: Automated setup (No backup, symlink etc)
 
 By Ilya Kisil <ilyakisil@gmail.com>
 
@@ -67,7 +67,7 @@ WHITE="\033[0;0m"
 DATE=`date '+%Y-%m-%d'`
 TIME=`date '+%H-%M-%S'`
 OS=`uname`
-DFH="$PWD"
+CONFIG_HOME="$PWD"
 
 declare -a CONFIG_FILES=(".gitconfig"
                          ".gitignore-global"
@@ -210,7 +210,7 @@ ssh_bootstrap(){
     if [[ ! -d $SSH_CONFIG_HOME ]]; then
         mkdir  $SSH_CONFIG_HOME
     fi
-    $COPY $DFH/dotfiles/ssh/config $HOME/.ssh/config
+    $COPY $CONFIG_HOME/dotfiles/ssh/config $HOME/.ssh/config
 
     # create ssh keys only if both parts are missing
     for name in "${SSH_KEYS[@]}"
@@ -228,25 +228,23 @@ ssh_bootstrap(){
 git_bootstrap(){
     printf "\nBootstrap of ${GREEN}GIT${WHITE} config files.\n"
 
-    $COPY $DFH/dotfiles/git/gitconfig $HOME/.gitconfig
-    $COPY $DFH/dotfiles/git/gitignore-global $HOME/.gitignore-global
+    $COPY $CONFIG_HOME/dotfiles/git/gitconfig $HOME/.gitconfig
+    $COPY $CONFIG_HOME/dotfiles/git/gitignore-global $HOME/.gitignore-global
 }
 
 tmux_bootstrap(){
     printf "\nBootstrap of ${GREEN}TMUX${WHITE} config files.\n"
 
-    $COPY $DFH/dotfiles/tmux/tmux.conf $HOME/.tmux.conf
+    $COPY $CONFIG_HOME/dotfiles/tmux/tmux.conf $HOME/.tmux.conf
 }
 
 zsh_bootstrap(){
     printf "\nBootstrap of ${GREEN}ZSH${WHITE} config files.\n"
 
-    $COPY $DFH/dotfiles/zsh/zshrc $HOME/.zshrc
-    printf "# Specific configurations for the local machine\n\n" >> $HOME/.zshrc-local
-    printf "ZSH_CUSTOM=$DFH/zsh/custom\n" >> $HOME/.zshrc-local
-    printf "ZSH_THEME=\"robbyrussell\"" >> $HOME/.zshrc-local
+    $COPY $CONFIG_HOME/dotfiles/zsh/zshrc $HOME/.zshrc
+    create_default_local_zshrc > $HOME/.zshrc-local
 
-    # ------------- Install Oh-My-Zsh
+    # ------------- Check that oh-my-zsh is instlled
     if [[ -d ~/.oh-my-zsh/ ]]; then
         echo -e "Oh-My-Zsh exists."
     else
@@ -262,10 +260,43 @@ zsh_bootstrap(){
     fi
 }
 
+create_default_local_zshrc(){
+
+ANACONDA_BIN=`which anaconda`
+if [ -z "$ANACONDA_BIN" ]; then
+    ANACONDA_HOME="# Anaconda is not installed. Manually add 'ANACONDA_HOME=/path/to/anaconda/bin' after installation."
+else
+    ANACONDA_HOME="ANACONDA_HOME=${ANACONDA_BIN::-9}"
+fi
+
+### Extend template for the local zshrc here
+cat << EOF
+#####################################################
+### Specific configurations for the local machine ###
+#####################################################
+
+ZSH_CUSTOM=${CONFIG_HOME}/dotfiles/zsh/custom
+ZSH_THEME="agnoster"
+
+${ANACONDA_HOME}
+
+
+#######################################
+#########       ALIASES       #########
+#######################################
+
+### REMOTE CONTROL ###
+
+
+### MOUNT DEVICES ###
+
+EOF
+}
+
 change_https_to_url(){
 
     # Change URLs from HTTPS to SSH in order to use an appropriate ssh key
-    cd $DFH
+    cd $CONFIG_HOME
     printf "\nChanging HTTPS to URL for origin of ${GREEN}config-lib.git${WHITE}\n"
     echo $PWD
     git remote -v
@@ -278,7 +309,7 @@ change_https_to_url(){
     git remote -v
     git remote set-url origin git@IlyaKisil.github.com:IlyaKisil/oh-my-zsh.git
     git remote -v
-    cd $DFH
+    cd $CONFIG_HOME
 }
 
 

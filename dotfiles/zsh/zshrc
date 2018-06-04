@@ -48,45 +48,34 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
+  tmux
 )
 
 source $HOME/.zshrc-local
-source $ZSH/oh-my-zsh.sh
 
-# User configuration
-# source $ZSH_CUSTOM
+# ANACONDA_HOME should be correctly defined in the local zshrc
+export PATH=$ANACONDA_HOME:$PATH
 
 
+################################################
+### Common aliases across all configurations ###
+################################################
+
+### GENERAL ###
 alias clc='clear'
 alias add='git add --all;git status'
-alias grep='grep --color=auto'
-
-
-############### CD TO SPECIFIC DIRECTORIES ###############
 alias gh='cd ~/GitHub'
 alias gl='cd ~/GitLab'
 
-############### REMOTE CONTROL ###############
-# ssh to my EEE machine
-alias eee='ssh eee_ubuntu'
-# ssh to my EEE_MAC_mini machine
-alias eeem='ssh eee_mac_mini'
-
-
-### JupyterLab
-alias jl='source deactivate;source activate py36;jupyter lab'
-# jupyter notebook with Dropbox as home
-alias jld='cd ~/Dropbox/1_ILIA/;source deactivate;source activate py36;jupyter lab'
-
-
-############### PYTHON ###############
-# alias python="python3"
-alias anaco='anaconda-navigator'
+### PYTHON ###
 alias sa='source activate'
 alias sd='source deactivate'
+alias jn='jupyter notebook'
+alias jl='source deactivate;source activate py36;jupyter lab'
+
+### MATLAB ###
+alias mat='matlab -nodisplay -nosplash'
 
 
 
-alias show='defaults write com.apple.finder AppleShowAllFiles YES;killall Finder /System/Library/CoreServices/Finder.app'
-alias hide='defaults write com.apple.finder AppleShowAllFiles NO;killall Finder /System/Library/CoreServices/Finder.app'
+source $ZSH/oh-my-zsh.sh
