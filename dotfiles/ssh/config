@@ -30,3 +30,16 @@ HOST owncloud_server
     HostName 155.198.125.147
     User sel
     IdentityFile ~/.ssh/owncloud_server
+
+Host shell1 shell2 shell3 shell4 batch1 batch2
+    HostName %h.doc.ic.ac.uk
+    User ik1614
+    IdentityFile ~/.ssh/doc_ik1614
+Host ray01 ray02 ray03 ray04 ray05 ray06 ray07 ray08 ray09 ray10
+    HostName %h.doc.ic.ac.uk
+    User ik1614
+    IdentityFile ~/.ssh/doc_ik1614
+Host line01 line02 line03 line04 line05 line06 line07 line08 line09 line10
+    HostName %h.doc.ic.ac.uk
+    User ik1614
+    IdentityFile ~/.ssh/doc_ik1614

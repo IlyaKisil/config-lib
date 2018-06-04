@@ -153,10 +153,10 @@ check_default_shell(){
             echo "Changing default shell to zsh. Enter password: "
 
             if [[ $OS == 'Linux' ]]; then
-                sudo chsh -s ${ZSH_BIN_PATH}
+                chsh -s ${ZSH_BIN_PATH}
             elif [[ $OS == 'Darwin' ]]; then
                 echo "${ZSH_BIN_PATH}" | sudo tee -a /etc/shells > /dev/null
-                sudo chsh -s ${ZSH_BIN_PATH}
+                chsh -s ${ZSH_BIN_PATH}
             fi
         fi
 	fi
@@ -243,11 +243,12 @@ zsh_bootstrap(){
 
     $COPY $DFH/dotfiles/zsh/zshrc $HOME/.zshrc
     printf "# Specific configurations for the local machine\n\n" >> $HOME/.zshrc-local
-    printf "export LANG=en_US.UTF-8\n" >> $HOME/.zshrc-local
+    printf "ZSH_CUSTOM=$DFH/zsh/custom\n" >> $HOME/.zshrc-local
+    printf "ZSH_THEME=\"robbyrussell\"" >> $HOME/.zshrc-local
 
-    # ------------- Install zsh, make it default shell
+    # ------------- Install Oh-My-Zsh
     if [[ -d ~/.oh-my-zsh/ ]]; then
-        echo -e "Oh-My-Zsh exists. Consider to do ${GREEN}git pull${WHITE}."
+        echo -e "Oh-My-Zsh exists."
     else
         # Clone oh-my-zsh and change URLs from HTTPS to SSH
         git clone https://github.com/IlyaKisil/oh-my-zsh.git ~/.oh-my-zsh/

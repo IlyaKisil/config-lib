@@ -1,4 +1,4 @@
-Configuration files
+Setting up configuration files
 ```
     git clone https://github.com/IlyaKisil/config-lib
     cd config-lib
