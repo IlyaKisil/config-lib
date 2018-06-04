@@ -242,6 +242,7 @@ zsh_bootstrap(){
     printf "\nBootstrap of ${GREEN}ZSH${WHITE} config files.\n"
 
     $COPY $CONFIG_HOME/dotfiles/zsh/zshrc $HOME/.zshrc
+    printf "Creating default .zshrc-local\n"
     create_default_local_zshrc > $HOME/.zshrc-local
 
     # ------------- Check that oh-my-zsh is instlled
@@ -261,7 +262,6 @@ zsh_bootstrap(){
 }
 
 create_default_local_zshrc(){
-    printf "Creating default .zshrc-local"
 
 ### Extend template for the local zshrc here
 cat << EOF
