@@ -261,13 +261,7 @@ zsh_bootstrap(){
 }
 
 create_default_local_zshrc(){
-
-ANACONDA_BIN=`which anaconda`
-if [ -z "$ANACONDA_BIN" ]; then
-    ANACONDA_HOME="# Anaconda is not installed. Manually add 'ANACONDA_HOME=/path/to/anaconda/bin' after installation."
-else
-    ANACONDA_HOME="ANACONDA_HOME=${ANACONDA_BIN::-9}"
-fi
+    printf "Creating default .zshrc-local"
 
 ### Extend template for the local zshrc here
 cat << EOF
@@ -278,7 +272,10 @@ cat << EOF
 ZSH_CUSTOM=${CONFIG_HOME}/dotfiles/zsh/custom
 ZSH_THEME="agnoster"
 
-${ANACONDA_HOME}
+## Uncomment and define these if you are going to be using them
+## They are sourced by the main ~/.zshrc
+# ANACONDA_HOME=/path/to/anaconda/bin
+# MATLAB_HOME=/path/to/matlab/bin
 
 
 #######################################
@@ -289,6 +286,7 @@ ${ANACONDA_HOME}
 
 
 ### MOUNT DEVICES ###
+
 
 EOF
 }
@@ -330,6 +328,13 @@ fi
 check_software zsh
 
 check_software tmux
+
+if [[ $OS == 'Linux' ]]; then
+    # For copying from and into tmux
+    check_software xclip
+elif [[ $OS == 'Darwin' ]]; then
+    echo -e "${RED}Warning:${WHITE} Not sure whether copying and pasting from and into tmux would work correctly for this OS (${OS})"
+fi
 
 check_default_shell
 

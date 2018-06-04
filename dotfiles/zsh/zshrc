@@ -53,9 +53,13 @@ plugins=(
 
 source $HOME/.zshrc-local
 
-# ANACONDA_HOME should be correctly defined in the local zshrc
+# The following HOME directories should be correctly
+# defined in the locla zshrc file (which is sourced above)
 export PATH=$ANACONDA_HOME:$PATH
+export PATH=$MATLAB_HOME:$PATH
 
+
+export BROWSER="google-chrome"
 
 ################################################
 ### Common aliases across all configurations ###
