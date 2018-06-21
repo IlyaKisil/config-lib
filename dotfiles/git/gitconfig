@@ -8,7 +8,7 @@
 	default = simple
 [core]
 	excludesfile = ~/.gitignore-global
-	editor = /usr/bin/nano
+	editor = `which nano`
 [color "status"]
     added = yellow
     changed = green
