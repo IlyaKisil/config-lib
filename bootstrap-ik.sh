@@ -4,7 +4,7 @@ clear
 manual(){
 echo "====================================================="
 cat << EOF
-usage: $0 [-h?] [-c]
+usage: $0 [-h?] [-a]
 
 BASIC OPTIONS:
    -h         Show this message
@@ -83,6 +83,7 @@ declare -a SSH_KEYS=("github_IlyaKisil"
                      "eee_mac_mini_ilia"
                      "owncloud_server"
                      "ik1614_doc"
+                     "ee_mandicws_cygwin_ik1614"
                      )
 
 BACKUP_DIR="$HOME/.config_${DATE}_${TIME}"
@@ -219,6 +220,8 @@ ssh_bootstrap(){
         if [ ! -f $ssh_key ] && [ ! -f "${ssh_key}.pub" ]   ; then
             printf "\tSSH key ${GREEN}$ssh_key${WHITE} is missing. Creating one.\n"
             ssh-keygen -t rsa -b 4096 -C "ilyakisil@gmail.com" <<< $ssh_key
+            printf "\tAdding this key to the ssh-agent.\n"
+            ssh-add $ssh_key
         else
             printf "\tSSH key ${RED}${ssh_key}${WHITE} exists. Creation is skipped.\n"
         fi
@@ -271,6 +274,7 @@ cat << EOF
 
 ZSH_CUSTOM=${CONFIG_HOME}/dotfiles/zsh/custom
 ZSH_THEME="agnoster"
+SCRIPTS_HOME=${CONFIG_HOME}/scripts
 
 ## Uncomment and define these if you are going to be using them
 ## They are sourced by the main ~/.zshrc

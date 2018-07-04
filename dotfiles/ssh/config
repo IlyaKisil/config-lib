@@ -22,6 +22,10 @@ HOST eee_mac_mini
     HostName dyn125-229.ee.ic.ac.uk
     User ilia_eee_mac
     IdentityFile ~/.ssh/eee_mac_mini_ilia
+HOST ee-mandicws
+    HostName ee-mandicws
+    User ik1614
+    IdentityFile ~/.ssh/ee_mandicws_cygwin_ik1614
 HOST shell1 shell2 shell3 shell4 batch1
     HostName %h.doc.ic.ac.uk
     User ik1614

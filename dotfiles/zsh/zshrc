@@ -55,9 +55,10 @@ plugins=(
 source $HOME/.zshrc-local
 
 # The following HOME directories should be correctly
-# defined in the locla zshrc file (which is sourced above)
+# defined in the local zshrc file (which is sourced above)
 export PATH=$ANACONDA_HOME:$PATH
 export PATH=$MATLAB_HOME:$PATH
+export PATH=$SCRIPTS_HOME:$PATH
 
 
 export BROWSER="google-chrome"
@@ -76,7 +77,9 @@ alias gl='cd ~/GitLab'
 alias sa='source activate'
 alias sd='source deactivate'
 alias jn='jupyter notebook'
-alias jl='source deactivate;source activate py36;jupyter lab'
+alias jl_mandic='start_jupyter.sh -c ee-mandicws -p 7777'
+alias jl_hottbox='start_jupyter.sh -v hottbox_dev -p 8000'
+alias jl='start_jupyter.sh -v py36'
 
 ### MATLAB ###
 alias mat='matlab -nodisplay -nosplash'
