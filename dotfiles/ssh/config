@@ -23,7 +23,7 @@ HOST eee_mac_mini
     User ilia_eee_mac
     IdentityFile ~/.ssh/eee_mac_mini_ilia
 HOST ee-mandicws
-    HostName ee-mandicws
+    HostName 155.198.125.77
     User ik1614
     IdentityFile ~/.ssh/ee_mandicws_cygwin_ik1614
 HOST shell1 shell2 shell3 shell4 batch1

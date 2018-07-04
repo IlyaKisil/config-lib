@@ -268,6 +268,7 @@ create_default_local_zshrc(){
 
 ### Extend template for the local zshrc here
 cat << EOF
+#! /bin/bash
 #####################################################
 ### Specific configurations for the local machine ###
 #####################################################
