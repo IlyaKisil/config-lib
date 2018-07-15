@@ -74,6 +74,7 @@ declare -a CONFIG_FILES=(".gitconfig"
                          ".zshrc"
                          ".zshrc-local"
                          ".tmux.conf"
+                         ".tmux-local.conf"
                          ".ssh/config"
                          )
 declare -a SSH_KEYS=("github_IlyaKisil"
@@ -239,6 +240,7 @@ tmux_bootstrap(){
     printf "\nBootstrap of ${GREEN}TMUX${WHITE} config files.\n"
 
     $COPY $CONFIG_HOME/dotfiles/tmux/tmux.conf $HOME/.tmux.conf
+    create_default_local_tmux_conf > $HOME/.tmux-local.conf
 
     # ------------- Check that Tmux Plugin Manager is installed
     if [[ -d ~/.tmux/plugins/tpm/ ]]; then
@@ -248,6 +250,29 @@ tmux_bootstrap(){
         git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     fi
     echo -e "Press ${GREEN}prefix + I${WHITE} in tmux session to install plugins.\n"
+}
+
+create_default_local_tmux_conf(){
+### Extend template for the local tmux.conf here
+cat << EOF
+#####################################################
+### Specific configurations for the local machine ###
+###   This file is sourced by the ~/.tmux.conf    ###
+#####################################################
+
+#######################################
+########       SHORTCUTS       ########
+#######################################
+
+
+
+
+#######################################
+#########       PLUGINS       #########
+#######################################
+
+
+EOF
 }
 
 zsh_bootstrap(){
@@ -274,12 +299,12 @@ zsh_bootstrap(){
 }
 
 create_default_local_zshrc(){
-
 ### Extend template for the local zshrc here
 cat << EOF
 #! /bin/bash
 #####################################################
 ### Specific configurations for the local machine ###
+###     This file is sourced by the ~/.zshrc      ###
 #####################################################
 
 ZSH_CUSTOM=${CONFIG_HOME}/dotfiles/zsh/custom
