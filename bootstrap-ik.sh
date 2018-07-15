@@ -239,6 +239,15 @@ tmux_bootstrap(){
     printf "\nBootstrap of ${GREEN}TMUX${WHITE} config files.\n"
 
     $COPY $CONFIG_HOME/dotfiles/tmux/tmux.conf $HOME/.tmux.conf
+
+    # ------------- Check that Tmux Plugin Manager is installed
+    if [[ -d ~/.tmux/plugins/tpm/ ]]; then
+        echo -e "Tmux Plugin Manager exists."
+    else
+        # Clone tmux plugin manager
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    fi
+    echo -e "Press ${GREEN}prefix + I${WHITE} in tmux session to install plugins.\n"
 }
 
 zsh_bootstrap(){
@@ -248,7 +257,7 @@ zsh_bootstrap(){
     printf "Creating default .zshrc-local\n"
     create_default_local_zshrc > $HOME/.zshrc-local
 
-    # ------------- Check that oh-my-zsh is instlled
+    # ------------- Check that oh-my-zsh is installed
     if [[ -d ~/.oh-my-zsh/ ]]; then
         echo -e "Oh-My-Zsh exists."
     else
