@@ -85,6 +85,12 @@ declare -a SSH_KEYS=("github_IlyaKisil"
                      "owncloud_server"
                      "ik1614_doc"
                      "ee_mandicws_cygwin_ik1614"
+                     "sapfs"
+                     "sapfs2"
+                     "sapone"
+                     "saptwo"
+                     "sapthree"
+                     "sapws"
                      )
 
 BACKUP_DIR="$HOME/.config_${DATE}_${TIME}"

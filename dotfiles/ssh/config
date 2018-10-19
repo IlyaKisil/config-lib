@@ -35,6 +35,31 @@ HOST owncloud_server
     User sel
     IdentityFile ~/.ssh/owncloud_server
 
+HOST sapfs
+    HostName sapfs
+    User ik1614
+    IdentityFile ~/.ssh/sapfs
+HOST sapfs2
+    HostName sapfs2
+    User ik1614
+    IdentityFile ~/.ssh/sapfs2
+HOST sapone
+    HostName sapone
+    User ik1614
+    IdentityFile ~/.ssh/sapone
+HOST saptwo
+    HostName saptwo
+    User ik1614
+    IdentityFile ~/.ssh/saptwo
+HOST sapthree
+    HostName sapthree
+    User ik1614
+    IdentityFile ~/.ssh/sapthree
+HOST sapws
+    HostName sapws
+    User ik1614
+    IdentityFile ~/.ssh/sapws
+
 Host shell1 shell2 shell3 shell4 batch1 batch2
     HostName %h.doc.ic.ac.uk
     User ik1614
