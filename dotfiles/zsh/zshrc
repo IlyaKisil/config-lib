@@ -85,6 +85,9 @@ alias jl='start_jupyter.sh -v py36'
 ### MATLAB ###
 alias mat='matlab -nodisplay -nosplash'
 
+### Generate TOC for *.md files ###
+alias md-toc='gh-md-toc-auto-clean'
+
 
 
 source $ZSH/oh-my-zsh.sh
