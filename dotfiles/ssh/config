@@ -15,7 +15,7 @@ HOST AnnaKisil.github.com
     IdentityFile ~/.ssh/github_AnnaKisil
 
 HOST eee_ubuntu
-    HostName 155.198.125.35
+    HostName doc-ik1614.ee.ic.ac.uk
     User ik1614
     IdentityFile ~/.ssh/eee_ubuntu_ik1614
 HOST eee_mac_mini
@@ -23,7 +23,7 @@ HOST eee_mac_mini
     User ilia_eee_mac
     IdentityFile ~/.ssh/eee_mac_mini_ilia
 HOST ee-mandicws
-    HostName 155.198.125.77
+    HostName ee-mandicws.ee.ic.ac.uk
     User ik1614
     IdentityFile ~/.ssh/ee_mandicws_cygwin_ik1614
 HOST shell1 shell2 shell3 shell4 batch1
