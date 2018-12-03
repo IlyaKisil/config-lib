@@ -18,6 +18,10 @@ HOST eee_ubuntu
     HostName doc-ik1614.ee.ic.ac.uk
     User ik1614
     IdentityFile ~/.ssh/eee_ubuntu_ik1614
+HOST eee_gpu
+    HostName ee-ik1614lx.ee.ic.ac.uk
+    User ik1614
+    IdentityFile ~/.ssh/ee-ik1614lx
 HOST eee_mac_mini
     HostName dyn125-229.ee.ic.ac.uk
     User ilia_eee_mac
