@@ -5,7 +5,7 @@ set -e
 function help() {
 
 local _FILE_NAME
-_FILE_NAME=`basename $0`
+_FILE_NAME=`basename ${BASH_SOURCE[0]}`
 
 cat << HELP_USAGE
 

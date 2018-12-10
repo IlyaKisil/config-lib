@@ -1,7 +1,6 @@
-#! /bin/bash
-clear
+#!/usr/bin/env bash
 
-manual(){
+help(){
 echo "====================================================="
 cat << EOF
 usage: $0 [-h?] [-a]
@@ -20,49 +19,30 @@ show_outline
 echo "====================================================="
 }
 
-show_outline(){
-    echo "====================================================="
-    echo "=====        Outline of what will happen        ====="
-    echo "====================================================="
-    echo ""
-
-    echo "Preparation stage: "
-    printf "\t 1. Make sure you have zsh and tmux installed. \n"
-    printf "\t 2. Install them if you don't. \n"
-    printf "\t 3. Make sure that zsh is your default shell. \n"
-    printf "\t 4. Change it if it's not. \n\n"
-
-    printf "Configuration stage: \n"
-    printf "\t 1. Backup existing configuration (except symlinks) in: \n"
-    printf "\t\t${GREEN}${BACKUP_DIR}${WHITE} \n"
-    printf "\t 2. Clean existing configuration if exists. \n"
-    for name in "${CONFIG_FILES[@]}"
-    do
-        printf "\t\t${RED}$HOME/$name$WHITE\n"
-    done
-    printf "\t 3. Create new configuration for: \n"
-    for name in "${CONFIG_FILES[@]}"
-    do
-        printf "\t\t$GREEN$HOME/$name$WHITE\n"
-    done
-    printf "\t 4. Create SSH keys if both private and public parts are missing: \n"
-    for key_name in "${SSH_KEYS[@]}"
-    do
-        printf "\t\t$GREEN$HOME/.ssh/$key_name$WHITE\n"
-    done
-    printf "\t 5. Change HTTPS to URL so to use appropriate SSH key. \n"
-
-}
-
-
 ##########################################
-###--------   Default values   --------###
+###----  Handy printing utilities  ----###
 ##########################################
+
 RED="\033[0;31m"
 GREEN="\033[0;32m"
 CYAN="\033[0;36m"
 BROWN="\033[0;33m"
 WHITE="\033[0;0m"
+function red(){
+    printf "${RED}$1${WHITE}"
+}
+function green(){
+    printf "${GREEN}$1${WHITE}"
+}
+
+function yellow(){
+    printf "${RED}$1${WHITE}"
+}
+
+##########################################
+###--------   Default values   --------###
+##########################################
+
 
 DATE=`date '+%Y-%m-%d'`
 TIME=`date '+%H-%M-%S'`
@@ -85,7 +65,7 @@ declare -a SSH_KEYS=("github_IlyaKisil"
                      "owncloud_server"
                      "ik1614_doc"
                      "ee_mandicws_cygwin_ik1614"
-		     "ee-ik1614lx"
+		             "ee-ik1614lx"
                      "sapfs"
                      "sapfs2"
                      "sapone"
@@ -102,7 +82,7 @@ while getopts "ha" OPTION;
 do
 	case $OPTION in
 		h|\?)
-			manual
+			help
             exit
 			;;
         a)  AUTO=1
@@ -113,15 +93,48 @@ done
 #########################################
 ###--------     Functions     --------###
 #########################################
+show_outline(){
+    echo "====================================================="
+    echo "=====        Outline of what will happen        ====="
+    echo "====================================================="
+    echo ""
+
+    echo "Preparation stage: "
+    printf "\t 1. Make sure you have zsh and tmux installed. \n"
+    printf "\t 2. Install them if you don't. \n"
+    printf "\t 3. Make sure that zsh is your default shell. \n"
+    printf "\t 4. Change it if it's not. \n\n"
+
+    printf "Configuration stage: \n"
+    printf "\t 1. Backup existing configuration (except symlinks) in: \n"
+    printf "\t\t`green ${BACKUP_DIR}` \n"
+    printf "\t 2. Clean existing configuration if exists. \n"
+    for name in "${CONFIG_FILES[@]}"
+    do
+        printf "\t\t`red $HOME/$name`\n"
+    done
+    printf "\t 3. Create new configuration for: \n"
+    for name in "${CONFIG_FILES[@]}"
+    do
+        printf "\t\t`green $HOME/$name`\n"
+    done
+    printf "\t 4. Create SSH keys if both private and public parts are missing: \n"
+    for key_name in "${SSH_KEYS[@]}"
+    do
+        printf "\t\t`green $HOME/.ssh/$key_name`\n"
+    done
+    printf "\t 5. Change HTTPS to URL so to use appropriate SSH key. \n"
+
+}
 
 check_software(){
-	printf "\nChecking to see if ${GREEN}$1${WHITE} is installed: "
+	printf "\nChecking to see if `green $1` is installed: "
 	if ! [ -x "$(command -v $1)" ]; then
-        echo -e "${RED}not installed${WHITE}."
+        echo -e "`red not installed`."
 		install_software $1
 	else
         soft_bin=`command -v $1`
-		echo -e "${GREEN}${soft_bin}${WHITE}."
+		echo -e "`green ${soft_bin}`."
 	fi
 }
 
@@ -133,19 +146,19 @@ install_software(){
             if [ -x "$(command -v apt-get)" ]; then
                 sudo apt-get install $1 -y
             else
-                echo -e "${RED}Warning:${WHITE} Not sure what your package manager is. Abort installation."
-                echo -e "${RED}Warning:${WHITE} Your configuration won't work as expected."
+                echo -e "`red Warning:` Not sure what your package manager is. Abort installation."
+                echo -e "`red Warning:` Your configuration won't work as expected."
             fi
 		elif [[ $OS == 'Darwin' ]]; then
             if [ -x "$(command -v brew)" ]; then
                 brew install $1
             else
-                echo -e "${RED}Warning:${WHITE} Not sure what your package manager is. Abort installation."
-                echo -e "${RED}Warning:${WHITE} Your configuration won't work as expected."
+                echo -e "`red Warning:` Not sure what your package manager is. Abort installation."
+                echo -e "`red Warning:` Your configuration won't work as expected."
             fi
 		fi
     else
-        echo -e "${RED}Warning:${WHITE} Your configuration won't work as expected."
+        echo -e "`red Warning:` Your configuration won't work as expected."
 	fi
 }
 
@@ -155,9 +168,9 @@ check_default_shell(){
 	else
         ZSH_BIN_PATH=`which zsh`
         CURRENT_SHELL=`which $SHELL`
-		printf "\nDefault shell is ${RED}${CURRENT_SHELL}${WHITE}. Trying to change to ${GREEN}zsh${WHITE}.\n"
+		printf "\nDefault shell is `red ${CURRENT_SHELL}`. Trying to change to `green zsh`.\n"
         if [ -z "$ZSH_BIN_PATH" ]; then
-            printf "\n${RED}WARNING:${WHITE} You still don't have zsh. Your configuration won't work as expected."
+            printf "\n`red WARNING:` You still don't have zsh. Your configuration won't work as expected."
         else
             echo "Changing default shell to zsh. Enter password: "
 
@@ -212,7 +225,7 @@ clean_config(){
 }
 
 ssh_bootstrap(){
-    printf "\nBootstrap of ${GREEN}SSH${WHITE} config files.\n"
+    printf "\nBootstrap of `green SSH` config files.\n"
 
     # setup ssh config
     SSH_CONFIG_HOME="$HOME/.ssh"
@@ -226,75 +239,53 @@ ssh_bootstrap(){
     do
         ssh_key="$HOME/.ssh/$name"
         if [ ! -f $ssh_key ] && [ ! -f "${ssh_key}.pub" ]   ; then
-            printf "\tSSH key ${GREEN}$ssh_key${WHITE} is missing. Creating one.\n"
+            printf "\tSSH key `green $ssh_key` is missing. Creating one.\n"
             ssh-keygen -t rsa -b 4096 -C "ilyakisil@gmail.com" <<< $ssh_key
             printf "\tAdding this key to the ssh-agent.\n"
             ssh-add $ssh_key
         else
-            printf "\tSSH key ${RED}${ssh_key}${WHITE} exists. Creation is skipped.\n"
+            printf "\tSSH key `red ${ssh_key}` exists. Creation is skipped.\n"
         fi
     done
 }
 
 git_bootstrap(){
-    printf "\nBootstrap of ${GREEN}GIT${WHITE} config files.\n"
+    printf "\nBootstrap of `green GIT` config files.\n"
 
     $COPY $CONFIG_HOME/dotfiles/git/gitconfig $HOME/.gitconfig
     $COPY $CONFIG_HOME/dotfiles/git/gitignore-global $HOME/.gitignore-global
 }
 
 tmux_bootstrap(){
-    printf "\nBootstrap of ${GREEN}TMUX${WHITE} config files.\n"
+    printf "\nBootstrap of `green TMUX` config files.\n"
 
+    printf "\t 1) Creating `green ".tmux.conf"`\n"
     $COPY $CONFIG_HOME/dotfiles/tmux/tmux.conf $HOME/.tmux.conf
-    create_default_local_tmux_conf > $HOME/.tmux-local.conf
+
+    printf "\t 2) Creating local configuration for tmux in `green ".tmux-local.conf"`\n"
+    cp $CONFIG_HOME/dotfiles/tmux/tmux-local.conf $HOME/.tmux-local.conf
+
 
     # ------------- Check that Tmux Plugin Manager is installed
-    if [[ -d ~/.tmux/plugins/tpm/ ]]; then
-        echo -e "Tmux Plugin Manager exists."
+    printf "\t 3) Cloning `green "Tmux plugin manager"`\n"
+    if [[ -d $HOME/.tmux/plugins/tpm/ ]]; then
+        echo -e "\t Tmux Plugin Manager exists."
     else
         # Clone tmux plugin manager
-        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+        git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
     fi
-    echo -e "Press ${GREEN}prefix + I${WHITE} in tmux session to install plugins.\n"
-}
-
-create_default_local_tmux_conf(){
-### Extend template for the local tmux.conf here
-cat << EOF
-#####################################################
-### Specific configurations for the local machine ###
-###   This file is sourced by the ~/.tmux.conf    ###
-#####################################################
-
-#######################################
-########       SHORTCUTS       ########
-#######################################
-
-
-
-
-#######################################
-#########       PLUGINS       #########
-#######################################
-
-
-EOF
+    echo -e "Press `green "prefix + I"` in tmux session to install plugins.\n"
 }
 
 zsh_bootstrap(){
-    printf "\nBootstrap of ${GREEN}ZSH${WHITE} config files.\n"
+    printf "\nBootstrap of `green ZSH` config files.\n"
 
-    $COPY $CONFIG_HOME/dotfiles/zsh/zshrc $HOME/.zshrc
-    printf "Creating default .zshrc-local\n"
-    create_default_local_zshrc > $HOME/.zshrc-local
-
-    # ------------- Check that oh-my-zsh is installed
-    if [[ -d ~/.oh-my-zsh/ ]]; then
-        echo -e "Oh-My-Zsh exists."
+    printf "\t 1) Cloning `green "oh-my-zsh"`\n"
+    if [[ -d $HOME/.oh-my-zsh/ ]]; then
+        echo -e "\t Oh-My-Zsh exists."
     else
         # Clone oh-my-zsh and change URLs from HTTPS to SSH
-        git clone https://github.com/IlyaKisil/oh-my-zsh.git ~/.oh-my-zsh/
+        git clone https://github.com/IlyaKisil/oh-my-zsh.git $HOME/.oh-my-zsh/
 
         # Git clone/install/delete powerline fonts for ``agnoster`` theme
         git clone https://github.com/powerline/fonts.git --depth=1
@@ -303,52 +294,28 @@ zsh_bootstrap(){
         cd ..
         rm -rf fonts
     fi
-}
 
-create_default_local_zshrc(){
-### Extend template for the local zshrc here
-cat << EOF
-#! /bin/bash
-#####################################################
-### Specific configurations for the local machine ###
-###     This file is sourced by the ~/.zshrc      ###
-#####################################################
+    printf "\t 2) Creating `green ".zshrc"`\n"
+    $COPY $CONFIG_HOME/dotfiles/zsh/zshrc $HOME/.zshrc
 
-ZSH_CUSTOM=${CONFIG_HOME}/dotfiles/zsh/custom
-ZSH_THEME="agnoster"
-SCRIPTS_HOME=${CONFIG_HOME}/scripts
+    printf "\t 3) Creating local configuration for the zsh in `green ".zshrc-local"`\n"
+    $COPY $CONFIG_HOME/dotfiles/zsh/zshrc-local $HOME/.zshrc-local
+    sed -i "s|__CONFIG_HOME__|$CONFIG_HOME|g" $HOME/.zshrc-local
 
-## Uncomment and define these if you are going to be using them
-## They are sourced by the main ~/.zshrc
-# ANACONDA_HOME=/path/to/anaconda/bin
-# MATLAB_HOME=/path/to/matlab/bin
-
-
-#######################################
-#########       ALIASES       #########
-#######################################
-
-### REMOTE CONTROL ###
-
-
-### MOUNT DEVICES ###
-
-
-EOF
 }
 
 change_https_to_url(){
 
     # Change URLs from HTTPS to SSH in order to use an appropriate ssh key
     cd $CONFIG_HOME
-    printf "\nChanging HTTPS to URL for origin of ${GREEN}config-lib.git${WHITE}\n"
+    printf "\nChanging HTTPS to URL for origin of `green config-lib.git`\n"
     echo $PWD
     git remote -v
     git remote set-url origin git@IlyaKisil.github.com:IlyaKisil/config-lib.git
     git remote -v
 
-    cd ~/.oh-my-zsh
-    printf "\nChanging HTTPS to URL for origin of ${GREEN}oh-my-zsh.git${WHITE}\n"
+    cd $HOME/.oh-my-zsh
+    printf "\nChanging HTTPS to URL for origin of `green oh-my-zsh.git`\n"
     echo $PWD
     git remote -v
     git remote set-url origin git@IlyaKisil.github.com:IlyaKisil/oh-my-zsh.git
@@ -365,22 +332,15 @@ show_outline
 printf "\nLet's get started? (y/n) "
 answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
 if echo "$answer" | grep -iq "^y" ;then
-    echo -e "\nFingers crossed and start. $GREEN:-/$WHITE"
+    echo -e "\nFingers crossed and start. `green ":-/"`"
 else
-    echo -e "\nQuitting, nothing was changed $RED:-($WHITE\n"
+    echo -e "\nQuitting, nothing was changed `red ":-("`\n"
     exit 0
 fi
 
 check_software zsh
 
 check_software tmux
-
-if [[ $OS == 'Linux' ]]; then
-    # For copying from and into tmux
-    check_software xclip
-elif [[ $OS == 'Darwin' ]]; then
-    echo -e "${RED}Warning:${WHITE} Not sure whether copying and pasting from and into tmux would work correctly for this OS (${OS})"
-fi
 
 check_default_shell
 
@@ -391,10 +351,10 @@ clean_config
 printf "\nWould you like to bootstrap as symlinks as opposed to copying? (y/n) "
 answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
 if echo "$answer" | grep -iq "^y" ;then
-    printf "Configuration files will be ${GREEN}symbolic links$WHITE.\n\n"
+    printf "Configuration files will be `green "symbolic links"`.\n\n"
     COPY="ln -sf"
 else
-    printf "Configuration files will be ${RED}copied$WHITE.\n\n"
+    printf "Configuration files will be `red copied`.\n\n"
     COPY="cp -r"
 fi
 
@@ -405,6 +365,6 @@ tmux_bootstrap
 
 change_https_to_url
 
-printf "\n\n================================\n"
-printf "=== ${GREEN}Configuration completed.${WHITE} ===\n"
-printf "================================\n\n"
+printf "\n=======================================\n"
+printf "=== `green 'Profile configuration completed'` ===\n"
+printf "=======================================\n\n"

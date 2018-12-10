@@ -1,5 +1,6 @@
 Host gitlab.doc.ic.ac.uk
-    RSAAuthentication yes
+    HostName gitlab.doc.ic.ac.uk
+    User ik1614
     IdentityFile ~/.ssh/gitlab_ik1614
 HOST IlyaKisil.github.com
     HostName github.com
