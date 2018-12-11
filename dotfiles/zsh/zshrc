@@ -59,9 +59,9 @@ source $HOME/.zshrc-local
 
 # The following HOME directories should be correctly
 # defined in the local zshrc file (which is sourced above)
-export PATH=$ANACONDA_HOME{PATH:+:${PATH}}
-export PATH=$MATLAB_HOME{PATH:+:${PATH}}
-export PATH=$SCRIPTS_HOME{PATH:+:${PATH}}
+export PATH=$ANACONDA_HOME${PATH:+:${PATH}}
+export PATH=$MATLAB_HOME${PATH:+:${PATH}}
+export PATH=$SCRIPTS_HOME${PATH:+:${PATH}}
 export PATH=$CUDA_HOME${PATH:+:${PATH}}
 
 export LD_LIBRARY_PATH=$CUDA_LIB64_HOME${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
