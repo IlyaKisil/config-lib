@@ -60,18 +60,9 @@ declare -a CONFIG_FILES=(".gitconfig"
 declare -a SSH_KEYS=("github_IlyaKisil"
                      "github_AnnaKisil"
                      "gitlab_ik1614"
-                     "eee_ubuntu_ik1614"
-                     "eee_mac_mini_ilia"
-                     "owncloud_server"
+                     "ik1614_eee"
                      "ik1614_doc"
-                     "ee_mandicws_cygwin_ik1614"
-		             "ee-ik1614lx"
-                     "sapfs"
-                     "sapfs2"
-                     "sapone"
-                     "saptwo"
-                     "sapthree"
-                     "sapws"
+                     "sap"
                      )
 
 BACKUP_DIR="$HOME/.config_${DATE}_${TIME}"
@@ -130,7 +121,7 @@ show_outline(){
 check_software(){
 	printf "\nChecking to see if `green $1` is installed: "
 	if ! [ -x "$(command -v $1)" ]; then
-        echo -e "`red not installed`."
+        echo -e "`red "not installed"`."
 		install_software $1
 	else
         soft_bin=`command -v $1`
@@ -235,12 +226,16 @@ ssh_bootstrap(){
     $COPY $CONFIG_HOME/dotfiles/ssh/config $HOME/.ssh/config
 
     # create ssh keys only if both parts are missing
+    local ssh_user
+    local ssh_pc
+    ssh_user=`whoami`
+    ssh_pc=`uname -n`
     for name in "${SSH_KEYS[@]}"
     do
         ssh_key="$HOME/.ssh/$name"
         if [ ! -f $ssh_key ] && [ ! -f "${ssh_key}.pub" ]   ; then
             printf "\tSSH key `green $ssh_key` is missing. Creating one.\n"
-            ssh-keygen -t rsa -b 4096 -C "ilyakisil@gmail.com" <<< $ssh_key
+            ssh-keygen -t rsa -b 4096 -C "${ssh_user}@${ssh_pc} ilyakisil@gmail.com" <<< $ssh_key
             printf "\tAdding this key to the ssh-agent.\n"
             ssh-add $ssh_key
         else
