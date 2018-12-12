@@ -80,15 +80,20 @@ alias gl='cd ~/GitLab'
 ### PYTHON ###
 alias sa='source activate'
 alias sd='source deactivate'
-alias jn='jupyter notebook'
-alias jl_hottbox='start_jupyter.sh -v py36 -p 8000'
-alias jl='start_jupyter.sh -v py36'
+
+# Jupyter general
+alias jn='start_jupyter.sh --notebook'
+alias jl='start_jupyter.sh'
+
+# Jupyter server for specific projects
+alias jl_hottbox='start_jupyter.sh --port=8000'
+
+# Tunneling to jupyter servers
+alias jl_eeik='start_jupyter.sh --connect=ee-ik1614lx --remote-port=7777 --port=7777'
+alias jl_docik='start_jupyter.sh --connect=doc-ik1614 --remote-port=7778 --port=7778'
 
 ### MATLAB ###
 alias mat='matlab -nodisplay -nosplash'
-
-### Generate TOC for *.md files ###
-alias md-toc='gh-md-toc-auto-clean'
 
 
 

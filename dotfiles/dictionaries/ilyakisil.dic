@@ -17,3 +17,5 @@ tmux
 gitconfig
 gitignore
 CUDA
+ipywidgets
+matplotlib
