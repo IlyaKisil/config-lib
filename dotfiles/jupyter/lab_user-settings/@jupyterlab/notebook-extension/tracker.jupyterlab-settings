@@ -1,0 +1,26 @@
+{
+    // Notebook settings.
+    // @jupyterlab/notebook-extension:tracker
+    // **************************************
+
+    // Code Cell Configuration
+    // The configuration for all code cells.
+    "codeCellConfig": {
+      "lineNumbers": true,
+      "wordWrapColumn": 120
+    },
+
+    // Markdown Cell Configuration
+    // The configuration for all markdown cells.
+    "markdownCellConfig": {
+      "autoClosingBrackets": true,
+      "lineNumbers": true,
+      "wordWrapColumn": 120
+    },
+
+    // Raw Cell Configuration
+    // The configuration for all raw cells.
+    "rawCellConfig": {
+      "wordWrapColumn": 120
+    }
+}
