@@ -1,3 +1,5 @@
+#@IgnoreInspection BashAddShebang
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -57,15 +59,13 @@ source $HOME/.zshrc-local
 
 # The following HOME directories should be correctly
 # defined in the local zshrc file (which is sourced above)
-export PATH=$ANACONDA_HOME:$PATH
-export PATH=$MATLAB_HOME:$PATH
-export PATH=$SCRIPTS_HOME:$PATH
-export PATH=$CUDA_HOME:$PATH
+export PATH=$ANACONDA_HOME${PATH:+:${PATH}}
+export PATH=$MATLAB_HOME${PATH:+:${PATH}}
+export PATH=$SCRIPTS_HOME${PATH:+:${PATH}}
+export PATH=$CUDA_HOME${PATH:+:${PATH}}
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_LIB64_HOME
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_CUPTI_LIB64_HOME
-
-export BROWSER="google-chrome"
+export LD_LIBRARY_PATH=$CUDA_LIB64_HOME${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export LD_LIBRARY_PATH=$CUDA_CUPTI_LIB64_HOME${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 ################################################
 ### Common aliases across all configurations ###
@@ -80,16 +80,20 @@ alias gl='cd ~/GitLab'
 ### PYTHON ###
 alias sa='source activate'
 alias sd='source deactivate'
-alias jn='jupyter notebook'
-alias jl_mandic='start_jupyter.sh -c ee-mandicws -p 7777'
-alias jl_hottbox='start_jupyter.sh -v py36 -p 8000'
-alias jl='start_jupyter.sh -v py36'
+
+# Jupyter general
+alias jn='start_jupyter.sh --notebook'
+alias jl='start_jupyter.sh'
+
+# Jupyter server for specific projects
+alias jl_hottbox='start_jupyter.sh --port=8000'
+
+# Tunneling to jupyter servers
+alias jl_eeik='start_jupyter.sh --connect=ee-ik1614lx --remote-port=7777 --port=7777'
+alias jl_docik='start_jupyter.sh --connect=doc-ik1614 --remote-port=7778 --port=7778'
 
 ### MATLAB ###
 alias mat='matlab -nodisplay -nosplash'
-
-### Generate TOC for *.md files ###
-alias md-toc='gh-md-toc-auto-clean'
 
 
 

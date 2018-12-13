@@ -1,24 +1,57 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-usage()
-{
-echo "*****************************************************"
-cat << EOF
-usage: $0 [-h] [-r] [-p port] [-c name] [-v venv]
-This script starts a jupyter lab.
-TYPICAL USE:
-	$0
-	This will start a jupyter lab with automatic selection of the port
-BASIC OPTIONS:
-   -h			Show this message
-   -r			Start jupyter lab on remote machine
-   -p [port]	Use port for starting/connecting to, Default is '8888'
-   -c [name]	Connect to remote server that runs jupyter lab
-   -v [venv]	Activate conda environment prior starting jupyter lab
+set -e
 
-By Ilya Kisil <ilyakisil@gmail.com>
-EOF
-echo "*****************************************************"
+function help() {
+
+local _FILE_NAME
+_FILE_NAME=`basename ${BASH_SOURCE[0]}`
+
+cat << HELP_USAGE
+
+Description:
+    This script starts a Jupyter Lab or Jupyter Notebook.
+
+Usage:
+    $_FILE_NAME [-h|--help] [--notebook] [--port=<PORT>]
+    [--remote-port=<REMOTE_PORT>] [--connect=<REMOTE_ID>]
+
+Examples:
+    $_FILE_NAME
+    $_FILE_NAME --port=9000
+    $_FILE_NAME --notebook --port=9000
+    $_FILE_NAME --connect=user@address --port=9000
+        Tunnelling localhost:9000 ==> user@address:9000
+    $_FILE_NAME --connect=doc-ik1614 --remote-port=8888 --port=9000
+        Tunnelling localhost:9000 ==> doc-ik1614:8888
+
+Options:
+    -h|--help
+    Show this message.
+
+    --notebook
+        Start Jupyter Notebook instead of Jupyter Lab.
+        By default Jupyter Lab is started.
+
+    --port=<port>
+        Local port for starting/connecting to Jupyter server.
+        Default is '8888'.
+
+    --remote-port=<remote_port>
+        Use port for starting/connecting to.
+        Defaults to value of specified by '--port'.
+
+    --connect=<REMOTE_ID>
+        Open ssh tunnel to remote server that runs jupyter server.
+        <REMOTE_ID> can be specified as 'user@address' and will ask for password.
+        Alternatively, you can use entries from the ssh config file (~/.ssh/config).
+
+Author:
+    Ilya Kisil <ilyakisil@gmail.com>
+
+Report bugs to ilyakisil@gmail.com.
+
+HELP_USAGE
 }
 
 RED="\033[0;31m"
@@ -27,55 +60,76 @@ CYAN="\033[0;36m"
 BROWN="\033[0;33m"
 WHITE="\033[0;0m"
 
-start_type=0
-use_venv=0
+### Default value for variables
+# User interface for jupyter
+UI="lab"
+
+# Exposed port on the local server
 port="8888"
-while getopts ":c:v:p:rh" OPTION
-do
-    case $OPTION in
-        h)
-            usage
+
+# Exposed port on the remote server
+remote_port=""
+
+# Exposed port on the remote server
+connect_to_remote=0
+
+### Parse arguments
+for arg in "$@"; do
+    case $arg in
+        -h|--help)
+            help
             exit
             ;;
-		v)
-			use_venv=1
-			venv="${OPTARG:r}"
-			;;
-		p)
-			port="${OPTARG:r}"
-			;;
-		r)
-            start_type=1
+        --notebook)
+            UI="notebook"
             ;;
-        c)
-            start_type=2
-            id="${OPTARG:r}"
+        --port=*)
+            port="${arg#*=}"
             ;;
-        \?)
-			echo "Invalid option: -$OPTARG" >&2
-            usage
-            exit 1
+        --remote-port=*)
+            remote_port="${arg#*=}"
             ;;
-     esac
+        --connect=*)
+            REMOTE_ID="${arg#*=}"
+            connect_to_remote=1
+            ;;
+        *)
+            # Skip unknown option
+            ;;
+    esac
+    shift
 done
 
+### Define new variables with respect to the parsed arguments
 
 
-if [[ ($use_venv == 1) ]]; then
-	printf "Activating conda environment: ${GREEN}${venv}${WHITE}\n"
-    source deactivate
-    source activate "${venv}"
+##########################################
+#--------          MAIN          --------#
+##########################################
+
+# Use zsh as shell for terminals if it exists
+if [ ! -z "${SHELL##*zsh*}" ] && [ -x "$(command -v zsh)" ]; then
+    SHELL_PATH=`which zsh`
+else
+    SHELL_PATH=$SHELL
 fi
 
-if [[ ($start_type == 0) ]]; then
-	printf "Starting Jupyter Lab for local use\n"
-	jupyter lab --port="${port}"
-elif [[ ($start_type == 1) ]]; then
-	printf "Starting Jupyter Lab for remote use\n"
-	jupyter lab --no-browser --port="${port}"
-elif [[ ($start_type == 2) ]]; then
-	printf "Creating a tunnel to the jupyter server running remotely.\n"
-	ssh -N -f -L localhost:${port}:localhost:${port} ${id}
-	printf "Jupyter Lab hosted on ${GREEN}${id}${WHITE} can be accessed through:\n\n"
-	printf "\t${GREEN}http://localhost:${port}/${WHITE} \n\n"
+if [[ ($connect_to_remote == 1) ]]; then
+
+    if [ -z $remote_port ]; then
+        remote_port=$port
+    fi
+
+    printf "INFO: Creating a tunnel to the jupyter server running remotely.\n"
+
+    ssh -N -f -L localhost:${port}:localhost:${remote_port} ${REMOTE_ID}
+
+    printf "INFO: Jupyter Server hosted on ${GREEN}[${REMOTE_ID}:${remote_port}]${WHITE} can be accessed through:\n"
+    printf "\t${GREEN}http://localhost:${port}/${WHITE} \n\n"
+
+else
+
+    printf "Starting Jupyter ${UI^}\n\n"
+    env SHELL=$SHELL_PATH jupyter ${UI} --no-browser --port="${port}"
+
 fi

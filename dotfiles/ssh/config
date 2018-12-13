@@ -1,5 +1,7 @@
+# GIT
 Host gitlab.doc.ic.ac.uk
-    RSAAuthentication yes
+    HostName gitlab.doc.ic.ac.uk
+    User ik1614
     IdentityFile ~/.ssh/gitlab_ik1614
 HOST IlyaKisil.github.com
     HostName github.com
@@ -14,65 +16,24 @@ HOST AnnaKisil.github.com
     PreferredAuthentications publickey
     IdentityFile ~/.ssh/github_AnnaKisil
 
-HOST eee_ubuntu
-    HostName doc-ik1614.ee.ic.ac.uk
+# ICL-EEE-CSP-Mandic
+HOST doc-ik1614 ee-ik1614lx ee-mandicws
+    HostName %h.ee.ic.ac.uk
     User ik1614
-    IdentityFile ~/.ssh/eee_ubuntu_ik1614
-HOST eee_gpu
-    HostName ee-ik1614lx.ee.ic.ac.uk
-    User ik1614
-    IdentityFile ~/.ssh/ee-ik1614lx
-HOST eee_mac_mini
-    HostName dyn125-229.ee.ic.ac.uk
-    User ilia_eee_mac
-    IdentityFile ~/.ssh/eee_mac_mini_ilia
-HOST ee-mandicws
-    HostName ee-mandicws.ee.ic.ac.uk
-    User ik1614
-    IdentityFile ~/.ssh/ee_mandicws_cygwin_ik1614
-HOST shell1 shell2 shell3 shell4 batch1
-    HostName %h.doc.ic.ac.uk
-    User ik1614
-    IdentityFile ~/.ssh/ik1614_doc
+    IdentityFile ~/.ssh/ik1614_eee
 HOST owncloud_server
     HostName 155.198.125.147
     User sel
-    IdentityFile ~/.ssh/owncloud_server
+    IdentityFile ~/.ssh/ik1614_eee
 
-HOST sapfs
-    HostName sapfs
+# ICL-EEE-CSP-SAP
+HOST sapfs sapfs2 sapone saptwo sapthree sapws
+    HostName %h.ee.ic.ac.uk
     User ik1614
-    IdentityFile ~/.ssh/sapfs
-HOST sapfs2
-    HostName sapfs2
-    User ik1614
-    IdentityFile ~/.ssh/sapfs2
-HOST sapone
-    HostName sapone
-    User ik1614
-    IdentityFile ~/.ssh/sapone
-HOST saptwo
-    HostName saptwo
-    User ik1614
-    IdentityFile ~/.ssh/saptwo
-HOST sapthree
-    HostName sapthree
-    User ik1614
-    IdentityFile ~/.ssh/sapthree
-HOST sapws
-    HostName sapws
-    User ik1614
-    IdentityFile ~/.ssh/sapws
+    IdentityFile ~/.ssh/sap
 
+# ICL-DOC
 Host shell1 shell2 shell3 shell4 batch1 batch2
     HostName %h.doc.ic.ac.uk
     User ik1614
-    IdentityFile ~/.ssh/doc_ik1614
-Host ray01 ray02 ray03 ray04 ray05 ray06 ray07 ray08 ray09 ray10
-    HostName %h.doc.ic.ac.uk
-    User ik1614
-    IdentityFile ~/.ssh/doc_ik1614
-Host line01 line02 line03 line04 line05 line06 line07 line08 line09 line10
-    HostName %h.doc.ic.ac.uk
-    User ik1614
-    IdentityFile ~/.ssh/doc_ik1614
+    IdentityFile ~/.ssh/ik1614_doc
