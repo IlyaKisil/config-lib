@@ -95,6 +95,10 @@ alias jl_docik='start_jupyter.sh --connect=doc-ik1614 --remote-port=7778 --port=
 ### MATLAB ###
 alias mat='matlab -nodisplay -nosplash'
 
+### Latex ###
+# Consider using make_pdf.sh custom script for generating pdf
+alias pdflatex='pdflatex -output-directory=build'
+
 
 
 source $ZSH/oh-my-zsh.sh

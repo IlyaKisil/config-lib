@@ -55,6 +55,7 @@ declare -a CONFIG_FILES=(".gitconfig"
                          ".zshrc-local"
                          ".tmux.conf"
                          ".tmux-local.conf"
+                         ".nanorc"
                          ".ssh/config"
                          )
 declare -a SSH_KEYS=("github_IlyaKisil"
@@ -299,6 +300,12 @@ zsh_bootstrap(){
 
 }
 
+nano_bootstrap(){
+    printf "\nBootstrap of `green NANO` config files.\n"
+
+    $COPY $CONFIG_HOME/dotfiles/nano/nanorc $HOME/.nanorc
+}
+
 change_https_to_url(){
 
     # Change URLs from HTTPS to SSH in order to use an appropriate ssh key
@@ -357,6 +364,7 @@ git_bootstrap
 zsh_bootstrap
 ssh_bootstrap
 tmux_bootstrap
+nano_bootstrap
 
 change_https_to_url
 
