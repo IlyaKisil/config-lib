@@ -57,10 +57,12 @@ plugins=(
 
 source $HOME/.zshrc-local
 
+### Set PATH
 # The following HOME directories should be correctly
 # defined in the local zshrc file (which is sourced above)
 export PATH=$ANACONDA_HOME${PATH:+:${PATH}}
 export PATH=$MATLAB_HOME${PATH:+:${PATH}}
+export PATH=$USER_BIN_HOME${PATH:+:${PATH}}
 export PATH=$SCRIPTS_HOME${PATH:+:${PATH}}
 export PATH=$CUDA_HOME${PATH:+:${PATH}}
 

@@ -8,6 +8,7 @@
 ZSH_THEME="agnoster"
 ZSH_CUSTOM=__CONFIG_HOME__/dotfiles/zsh/custom
 SCRIPTS_HOME=__CONFIG_HOME__/scripts
+USER_BIN_HOME=$HOME/bin
 
 ### Uncomment and correctly define these if you are going to be
 ### this software (they are sourced by the main ~/.zshrc)

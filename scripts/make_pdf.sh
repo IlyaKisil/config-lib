@@ -22,7 +22,7 @@ Options:
 
     --file=<FILE_NAME>
         Defines the name of file for which pdf will be generated.
-        Must have markdown file extension ('*.tex').
+        Must have '*.tex' file extension.
         Default is 'main.tex'.
 
     --aux-dir=<AUX_DIR>
@@ -51,6 +51,7 @@ Options:
 Examples:
     ${_FILE_NAME} --file=my_main.tex
         Use 'my_main.tex' to produce pdf document with 'latexmk'.
+        All files will be stored in default location of --aux-dir.
 
     ${_FILE_NAME} --bibtex --aux-dir=tmp
         Use bibtex during the process of producing pdf document
@@ -157,6 +158,9 @@ else
 fi
 
 function compile () {
+    if [[ ! -d ${AUX_DIR} ]]; then
+        mkdir -p ${AUX_DIR}
+    fi
     if [[ (${ENGINE} == 1) ]]; then
         echo "`INFO $MAKE_PDF` Creating pdf with 'latexmk'"
         if [[ (${USE_BIBTEX} == 1) ]]; then
