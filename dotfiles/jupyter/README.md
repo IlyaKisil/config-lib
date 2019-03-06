@@ -1,5 +1,17 @@
-# Last update 13.12.2018
 This directory contains configuration files with user settings for Jupyter Lab and Jupyter Notebook
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents** generated with [DocToc](https://github.com/thlorenz/doctoc) 
+
+Last Update: 2019-03-06
+
+- [Overall thoughts](#overall-thoughts)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
+
 
 ## Overall thoughts
 -   It is better to have Jupyter Lab/Notebook installed in the base environment

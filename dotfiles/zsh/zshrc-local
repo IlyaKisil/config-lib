@@ -8,22 +8,48 @@
 ZSH_THEME="agnoster"
 ZSH_CUSTOM=__CONFIG_HOME__/dotfiles/zsh/custom
 SCRIPTS_HOME=__CONFIG_HOME__/scripts
-USER_BIN_HOME=$HOME/bin
+USER_BIN=$HOME/bin
+
 
 ### Uncomment and correctly define these if you are going to be
 ### this software (they are sourced by the main ~/.zshrc)
-# ANACONDA_HOME=/path/to/anaconda/bin
-# MATLAB_HOME=/path/to/matlab/bin
-# CUDA_HOME=/usr/local/cuda/bin
-# CUDA_LIB64_HOME=/usr/local/cuda/lib64
-# CUDA_CUPTI_LIB64_HOME=/usr/local/cuda/extras/CUPTI/lib64
+#MATLAB_BIN=/path/to/matlab/bin
+#CUDA_BIN=/usr/local/cuda/bin
+#CUDA_LIB64_HOME=/usr/local/cuda/lib64
+#CUDA_CUPTI_LIB64_HOME=/usr/local/cuda/extras/CUPTI/lib64
+
 
 ### Variables used by 'sync-settings' in ATOM
 ### Uncomment and define these if you are using this package
-# Personal access token to GitHub which has the gist scope
-# export GITHUB_TOKEN=""
-# Last part of url (after username) related to private gist with Atom dotfiles
-# export GIST_ID=""
+## Personal access token to GitHub which has the gist scope
+#export GITHUB_TOKEN=""
+## Last part of url (after username) related to private gist with Atom dotfiles
+#export GIST_ID=""
+
+
+### Configurations for nodejs version manager (nvm)
+### Uncomment and change 'NVM_DIR' if required
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+### Conda specific configuration (appended to ~/.zshrc with the call of conda init)
+### Adaptation of contents which is managed by 'conda init'
+### Uncomment and correctly define 'ANACONDA_HOME'
+# >>> conda initialize >>>
+#ANACONDA_HOME=/path/to/anaconda
+#ANACONDA_BIN=${ANACONDA_HOME}/bin
+#__conda_setup="$('$ANACONDA_HOME/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+#if [[ $? -eq 0 ]]; then
+#    eval "${__conda_setup}"
+#else
+#    if [[ -f "${ANACONDA_HOME}/etc/profile.d/conda.sh" ]]; then
+#        . "${ANACONDA_HOME}/etc/profile.d/conda.sh"
+#    fi
+#fi
+#unset __conda_setup
+# <<< conda initialize <<<
 
 
 #######################################

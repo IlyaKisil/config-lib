@@ -281,7 +281,7 @@ zsh_bootstrap(){
         echo -e "\t Oh-My-Zsh exists."
     else
         # Clone oh-my-zsh and change URLs from HTTPS to SSH
-        git clone https://github.com/IlyaKisil/oh-my-zsh.git $HOME/.oh-my-zsh/
+        git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh/
 
         # Git clone/install/delete powerline fonts for ``agnoster`` theme
         git clone https://github.com/powerline/fonts.git --depth=1
@@ -315,14 +315,6 @@ change_https_to_url(){
     git remote -v
     git remote set-url origin git@IlyaKisil.github.com:IlyaKisil/config-lib.git
     git remote -v
-
-    cd $HOME/.oh-my-zsh
-    printf "\nChanging HTTPS to URL for origin of `green oh-my-zsh.git`\n"
-    echo $PWD
-    git remote -v
-    git remote set-url origin git@IlyaKisil.github.com:IlyaKisil/oh-my-zsh.git
-    git remote -v
-    cd $CONFIG_HOME
 }
 
 

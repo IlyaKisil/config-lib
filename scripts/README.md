@@ -1,7 +1,13 @@
-# Table of contents
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents** generated with [DocToc](https://github.com/thlorenz/doctoc) 
 
-<!--ts-->
-<!--te-->
+Last Update: 2019-03-06
+
+- [My scripts](#my-scripts)
+- [External scripts](#external-scripts)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## My scripts
 These could be executed directly from shell, since this directory is added to `$PATH`. Most of the scripts can display help message `some_script -h` or `some_script --help` which provides more detailed information and use cases.
