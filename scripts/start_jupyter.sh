@@ -129,7 +129,7 @@ if [[ ($connect_to_remote == 1) ]]; then
 
 else
 
-    printf "Starting Jupyter ${UI^}\n\n"
+    printf "Starting Jupyter ${UI}\n\n"
     env SHELL=$SHELL_PATH jupyter ${UI} --no-browser --port="${port}"
 
 fi
