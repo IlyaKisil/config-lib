@@ -37,3 +37,13 @@ Host shell1 shell2 shell3 shell4 batch1 batch2
     HostName %h.doc.ic.ac.uk
     User ik1614
     IdentityFile ~/.ssh/ik1614_doc
+
+# Crypton-AI
+Host crypton-ai-ik1614
+    HostName crypton-ai-ik1614
+    User ik1614
+    IdentityFile ~/.ssh/crypton-ai-ik1614
+Host nexus.crypton.ai
+    HostName nexus.crypton.ai
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/bitbucket-crypton-ai
