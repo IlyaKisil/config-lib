@@ -54,6 +54,7 @@ plugins=(
   tmux
   docker
   colored-man-pages
+  autoswitch_virtualenv
 )
 
 source $HOME/.zshrc-local
@@ -83,10 +84,11 @@ export PIPENV_VENV_IN_PROJECT=1
 
 ### GENERAL ###
 alias clc='clear'
-alias add='git add --all;git status'
 alias gh='cd ~/GitHub'
 alias gl='cd ~/GitLab'
-alias doctoc='doctoc --github --title "**Table of Contents** generated with [DocToc](https://github.com/thlorenz/doctoc) $(echo "\n\nLast Update: `date +%Y-%m-%d`")"'
+alias bb='cd ~/BitBucket'
+alias gh-doctoc='doctoc --github --title "$(echo "\n**Table of Contents** generated with [DocToc](https://github.com/thlorenz/doctoc) \n\nLast Update: `date +%Y-%m-%d`")"'
+alias bb-doctoc='doctoc --bitbucket --title "$(echo "\n**Table of Contents** generated with [DocToc](https://github.com/thlorenz/doctoc) \n\nLast Update: `date +%Y-%m-%d`")"'
 
 ### PYTHON ###
 alias sa='conda activate'

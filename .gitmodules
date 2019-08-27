@@ -1,0 +1,3 @@
+[submodule "dotfiles/zsh/custom/plugins/autoswitch_virtualenv"]
+	path = dotfiles/zsh/custom/plugins/autoswitch_virtualenv
+	url = https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv.git
