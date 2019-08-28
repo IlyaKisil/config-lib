@@ -54,7 +54,7 @@ plugins=(
   tmux
   docker
   colored-man-pages
-  autoswitch_virtualenv
+  # autoswitch_virtualenv  ### Note, there are be some problems when you change dir while it activated venv
 )
 
 source $HOME/.zshrc-local
