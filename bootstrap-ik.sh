@@ -50,6 +50,7 @@ OS=`uname`
 CONFIG_HOME="$PWD"
 
 declare -a CONFIG_FILES=(".gitconfig"
+                         ".gitconfig-github"
                          ".gitignore-global"
                          ".zshrc"
                          ".zshrc-local"
@@ -249,6 +250,7 @@ git_bootstrap(){
     printf "\nBootstrap of `green GIT` config files.\n"
 
     $COPY $CONFIG_HOME/dotfiles/git/gitconfig $HOME/.gitconfig
+    $COPY $CONFIG_HOME/dotfiles/git/gitconfig-github $HOME/.gitconfig-github
     $COPY $CONFIG_HOME/dotfiles/git/gitignore-global $HOME/.gitignore-global
 }
 

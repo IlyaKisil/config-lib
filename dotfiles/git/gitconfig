@@ -3,7 +3,10 @@
 	iu = true
 [user]
 	name = Ilya Kisil
-	email = ilyakisil@gmail.com
+[includeIf "gitdir:Crypton/"]
+  path = ~/.gitconfig-crypton
+[includeIf "gitdir:GitHub/"]
+  path = ~/.gitconfig-github
 [push]
 	default = simple
 [core]
