@@ -51,18 +51,22 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  tmux
-  docker
   colored-man-pages
-  # autoswitch_virtualenv  ### Note, there are be some problems when you change dir while it activated venv
+  safe-paste
+  # vi-mode
+  # zsh-autosuggestions
 )
 
 source $HOME/.zshrc-local
 
+plugins=(
+  ${plugins}
+  ${ZSH_PLUGINS}
+)
 
 
 ### Set PATH
-# The following HOME directories should be correctly
+# The following HOME directories should be ßcorrectly
 # defined in the local zshrc file (which is sourced above)
 export PATH=$MATLAB_BIN${PATH:+:${PATH}}
 export PATH=$USER_BIN${PATH:+:${PATH}}
@@ -76,6 +80,11 @@ export LD_LIBRARY_PATH=$CUDA_CUPTI_LIB64_HOME${LD_LIBRARY_PATH:+:${LD_LIBRARY_PA
 # Configurations for python
 export PATH=$ANACONDA_BIN${PATH:+:${PATH}}
 export PATH=$HOME/.local/bin${PATH:+:${PATH}}
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
 export PIPENV_VENV_IN_PROJECT=1
 
 ################################################
@@ -115,3 +124,11 @@ alias pdflatex='pdflatex -output-directory=build'
 
 
 source $ZSH/oh-my-zsh.sh
+
+
+#######################################
+######       KEY BINDINGS       #######
+#######################################
+# Search history with up and down by the first match
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search

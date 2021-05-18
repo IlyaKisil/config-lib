@@ -297,7 +297,7 @@ zsh_bootstrap(){
     $COPY $CONFIG_HOME/dotfiles/zsh/zshrc $HOME/.zshrc
 
     printf "\t 3) Creating local configuration for the zsh in `green ".zshrc-local"`\n"
-    $COPY $CONFIG_HOME/dotfiles/zsh/zshrc-local $HOME/.zshrc-local
+    cp $CONFIG_HOME/dotfiles/zsh/zshrc-local $HOME/.zshrc-local
     sed -i "s|__CONFIG_HOME__|$CONFIG_HOME|g" $HOME/.zshrc-local
 
 }

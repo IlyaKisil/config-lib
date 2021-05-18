@@ -3,15 +3,16 @@
 	iu = true
 [user]
 	name = Ilya Kisil
-[includeIf "gitdir:Crypton/"]
-  path = ~/.gitconfig-crypton
-[includeIf "gitdir:GitHub/"]
-  path = ~/.gitconfig-github
+	email = ilya@blockchain.com
+[includeIf "gitdir:/Users/ilya/"]
+  path = ~/.gitconfig-blockchain
+[includeIf "gitdir:IlyaKisil/"]
+  path = ~/.gitconfig-IlyaKisil
 [push]
 	default = simple
 [core]
 	# excludesfile = ~/.gitignore-global
-	editor = `which nano`
+	editor = `which vim`
 [color "status"]
     added = yellow
     changed = green
